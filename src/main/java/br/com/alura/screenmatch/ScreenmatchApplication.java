@@ -40,6 +40,6 @@ public class ScreenmatchApplication implements CommandLineRunner {
 			listaDadosTemporada.add(dadosTemporada);
 		}
 
-		System.out.println(listaDadosTemporada);
+		listaDadosTemporada.forEach(System.out::println);
 	}
 }
