@@ -1,13 +1,13 @@
 package br.com.alura.screenmatch.principal;
 
 import br.com.alura.screenmatch.model.ConverteDados;
+import br.com.alura.screenmatch.model.DadosEpisodio;
 import br.com.alura.screenmatch.model.DadosSerie;
 import br.com.alura.screenmatch.model.DadosTemporada;
 import br.com.alura.screenmatch.service.ConsumoApi;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Principal {
 
@@ -37,5 +37,19 @@ public class Principal {
 
         // Imprimindo o titulo dos episodios utilizando lambda
         listaTemporadas.forEach(t -> t.episodios().forEach(e -> System.out.println(e.titulo())));
+
+        // Criando uma unica lista contendo todos os episodios
+        List<DadosEpisodio> listaEpisodios = listaTemporadas.stream()
+                .flatMap(t -> t.episodios().stream())
+                .collect(Collectors.toList());
+
+        // Top 5 Episodios:
+        System.out.println("\n TOP 5 Episodios");
+        listaEpisodios.stream()
+                .filter(e -> !e.avaliacao().equalsIgnoreCase("N/A"))
+                .sorted(Comparator.comparing(DadosEpisodio::avaliacao).reversed())
+                .limit(5)
+                .forEach(System.out::println);
+
     }
 }
