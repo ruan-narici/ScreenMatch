@@ -4,6 +4,7 @@ import br.com.alura.screenmatch.model.ConverteDados;
 import br.com.alura.screenmatch.model.DadosEpisodio;
 import br.com.alura.screenmatch.model.DadosSerie;
 import br.com.alura.screenmatch.model.DadosTemporada;
+import br.com.alura.screenmatch.principal.Principal;
 import br.com.alura.screenmatch.service.ConsumoApi;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -41,5 +42,8 @@ public class ScreenmatchApplication implements CommandLineRunner {
 		}
 
 		listaDadosTemporada.forEach(System.out::println);
+
+		Principal principal = new Principal();
+		principal.exibeMenu();
 	}
 }
