@@ -33,6 +33,9 @@ public class Principal {
             listaTemporadas.add(dadosTemporada);
         }
 
-        listaTemporadas.forEach(System.out::println);
+//        listaTemporadas.forEach(System.out::println);
+
+        // Imprimindo o titulo dos episodios utilizando lambda
+        listaTemporadas.forEach(t -> t.episodios().forEach(e -> System.out.println(e.titulo())));
     }
 }
