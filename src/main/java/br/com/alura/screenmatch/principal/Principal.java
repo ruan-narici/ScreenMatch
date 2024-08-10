@@ -3,6 +3,9 @@ package br.com.alura.screenmatch.principal;
 import br.com.alura.screenmatch.model.*;
 import br.com.alura.screenmatch.service.ConsumoApi;
 
+import java.text.DateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -53,6 +56,20 @@ public class Principal {
                 .flatMap(t -> t.episodios().stream()
                         .map(e -> new Episodio(t.numero(), e)))
                 .collect(Collectors.toList());
-        System.out.println(listaObjetosEpisodios);
+//        System.out.println(listaObjetosEpisodios);
+
+        System.out.println("Digite o ano buscado: ");
+        Integer anoBuscado = leitor.nextInt();
+        leitor.nextLine();
+        LocalDate dataBuscada = LocalDate.of(anoBuscado, 1, 1);
+        DateTimeFormatter formatadorData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        listaObjetosEpisodios.stream()
+                .filter(e -> e.getDataLancamento() != null && e.getDataLancamento().isAfter(dataBuscada))
+                .forEach(e -> System.out.println(
+                        "Temporada: " + e.getNumeroTemporada() +
+                                " Titulo: " + e.getTitulo() +
+                                " Data lançamento: " + e.getDataLancamento().format(formatadorData)
+                ));
     }
 }
