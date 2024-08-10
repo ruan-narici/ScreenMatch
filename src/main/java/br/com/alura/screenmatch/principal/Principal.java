@@ -1,9 +1,6 @@
 package br.com.alura.screenmatch.principal;
 
-import br.com.alura.screenmatch.model.ConverteDados;
-import br.com.alura.screenmatch.model.DadosEpisodio;
-import br.com.alura.screenmatch.model.DadosSerie;
-import br.com.alura.screenmatch.model.DadosTemporada;
+import br.com.alura.screenmatch.model.*;
 import br.com.alura.screenmatch.service.ConsumoApi;
 
 import java.util.*;
@@ -51,5 +48,11 @@ public class Principal {
                 .limit(5)
                 .forEach(System.out::println);
 
+        // Criando novos objetos do tipo Episodio apos iterar a lista de temporadas
+        List<Episodio> listaObjetosEpisodios = listaTemporadas.stream()
+                .flatMap(t -> t.episodios().stream()
+                        .map(e -> new Episodio(t.numero(), e)))
+                .collect(Collectors.toList());
+        System.out.println(listaObjetosEpisodios);
     }
 }
