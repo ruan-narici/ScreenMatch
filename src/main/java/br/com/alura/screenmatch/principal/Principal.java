@@ -85,14 +85,24 @@ public class Principal {
                 .forEach(e -> System.out.println(e.getTitulo()));
 
         // Buscando um episodio pelo titulo
-        System.out.println("Digite o titulo do episódio: ");
-        String episodioBuscado = leitor.nextLine();
+//        System.out.println("Digite o titulo do episódio: ");
+//        String episodioBuscado = leitor.nextLine();
+//
+//        Optional<Episodio> episodioEncontrado = listaTop10Episodios.stream()
+//                .filter(e -> e.getTitulo().toUpperCase().contains(episodioBuscado.toUpperCase()))
+//                .findFirst();
+//
+//        System.out.println(episodioEncontrado.get());
 
-        Optional<Episodio> episodioEncontrado = listaTop10Episodios.stream()
-                .filter(e -> e.getTitulo().toUpperCase().contains(episodioBuscado.toUpperCase()))
-                .findFirst();
 
-        System.out.println(episodioEncontrado);
+        // Realizando a media de avaliacao por temporada
+        System.out.println("Média de avaliação por temporada");
+        Map<Integer, Double> mediaAvaliacaoPorTemporada = listaTemporadas.stream()
+                .flatMap(t -> t.episodios().stream()
+                        .filter(e -> !e.avaliacao().equalsIgnoreCase("N/A"))
+                        .map(e -> new Episodio(t.numero(), e)))
+                .collect(Collectors.groupingBy(Episodio::getNumeroTemporada, Collectors.averagingDouble(Episodio::getAvaliacao)));
+        System.out.println(mediaAvaliacaoPorTemporada);
 
 
 
