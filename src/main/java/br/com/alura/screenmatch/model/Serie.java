@@ -24,4 +24,81 @@ public class Serie {
         this.baner = dadosSerie.baner();
         this.sinopse = dadosSerie.sinopse();
     }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public Integer getTemporada() {
+        return temporada;
+    }
+
+    public void setTemporada(Integer temporada) {
+        this.temporada = temporada;
+    }
+
+    public String getAno() {
+        return ano;
+    }
+
+    public void setAno(String ano) {
+        this.ano = ano;
+    }
+
+    public Double getAvaliacao() {
+        return avaliacao;
+    }
+
+    public void setAvaliacao(Double avaliacao) {
+        this.avaliacao = avaliacao;
+    }
+
+    public Categoria getGenero() {
+        return genero;
+    }
+
+    public void setGenero(Categoria genero) {
+        this.genero = genero;
+    }
+
+    public String getAtores() {
+        return atores;
+    }
+
+    public void setAtores(String atores) {
+        this.atores = atores;
+    }
+
+    public String getBaner() {
+        return baner;
+    }
+
+    public void setBaner(String baner) {
+        this.baner = baner;
+    }
+
+    public String getSinopse() {
+        return sinopse;
+    }
+
+    public void setSinopse(String sinopse) {
+        this.sinopse = sinopse;
+    }
+
+    @Override
+    public String toString() {
+        return
+            "genero=" + genero +
+            ", titulo='" + titulo + '\'' +
+            ", temporada=" + temporada +
+            ", ano='" + ano + '\'' +
+            ", avaliacao=" + avaliacao +
+            ", atores='" + atores + '\'' +
+            ", baner='" + baner + '\'' +
+            ", sinopse='" + sinopse + '\'';
+    }
 }

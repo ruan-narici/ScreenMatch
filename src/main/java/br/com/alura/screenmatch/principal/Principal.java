@@ -39,8 +39,8 @@ public class Principal {
                     break;
                 }
                 case 2: {
-                    DadosSerie serie = buscarSerie();
-                    buscarEpisodios(serie.titulo());
+                    Serie serie = buscarSerie();
+                    buscarEpisodios(serie.getTitulo());
                     break;
                 }
                 case 0: {
@@ -51,12 +51,13 @@ public class Principal {
         }
     }
 
-    public DadosSerie buscarSerie() {
+    public Serie buscarSerie() {
         System.out.println("Digite o nome da série: ");
         String nomeSerie = leitor.nextLine().replace(" ", "+");
 
         String json = consumoApi.obterDados(ENDERECO_URL + nomeSerie + CHAVE_API);
-        DadosSerie serie = converteDados.obterDados(json, DadosSerie.class);
+        DadosSerie dadosSerie = converteDados.obterDados(json, DadosSerie.class);
+        Serie serie = new Serie(dadosSerie);
         System.out.println(serie);
         return serie;
     }
