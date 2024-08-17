@@ -2,6 +2,8 @@ package br.com.alura.screenmatch.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.OptionalDouble;
 
 @Entity
@@ -9,8 +11,9 @@ import java.util.OptionalDouble;
 public class Serie {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(unique = true)
     private String titulo;
     private Integer temporada;
     private String ano;
@@ -20,6 +23,8 @@ public class Serie {
     private String atores;
     private String baner;
     private String sinopse;
+    @Transient
+    private List<Episodio> episodios = new ArrayList<>();
 
     public Serie(DadosSerie dadosSerie) {
         this.titulo = dadosSerie.titulo();
@@ -31,6 +36,8 @@ public class Serie {
         this.baner = dadosSerie.baner();
         this.sinopse = dadosSerie.sinopse();
     }
+
+    public Serie() {}
 
     public Long getId() {
         return id;
