@@ -6,6 +6,7 @@ import br.com.alura.screenmatch.service.ConsumoApi;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
@@ -17,8 +18,8 @@ public class Principal {
     private ConsumoApi consumoApi = new ConsumoApi();
     private ConverteDados converteDados = new ConverteDados();
     private Scanner leitor = new Scanner(System.in);
-    private Serie serie;
     private SerieRepository serieRepository;
+    private List<Serie> serieList;
 
     public Principal(SerieRepository serieRepository) {
         this.serieRepository = serieRepository;
@@ -62,44 +63,49 @@ public class Principal {
         }
     }
 
-    public Serie buscarSerie() {
+    public void buscarSerie() {
         System.out.println("Digite o nome da série: ");
         String nomeSerie = leitor.nextLine().replace(" ", "+");
 
         String json = consumoApi.obterDados(ENDERECO_URL + nomeSerie + CHAVE_API);
         DadosSerie dadosSerie = converteDados.obterDados(json, DadosSerie.class);
         Serie serie = new Serie(dadosSerie);
-        this.serie = serie;
         this.serieRepository.save(serie);
         System.out.println(serie);
-        return serie;
     }
 
     public void buscarEpisodios() {
-        String nomeSerie =  this.serie.getTitulo().replace(" ", "+");
-        System.out.println("Digite o nome do episódio: ");
-        String nomeEpisodio = leitor.nextLine().replace(" ", "+");;
+        listarSeriesBuscadas();
+        System.out.println("Selecione a serie pelo nome: ");
+        String nomeSerie = leitor.nextLine();
 
-        List<DadosTemporada> dadosTemporadaList = new ArrayList<>();
+        Optional<Serie> serieBuscada =  this.serieList.stream()
+                        .filter(s -> s.getTitulo().toLowerCase().contains(nomeSerie.toLowerCase()))
+                                .findFirst();
 
-        for (int i = 1; i <= this.serie.getTemporada(); i++) {
-            String json = consumoApi.obterDados(ENDERECO_URL + nomeSerie + "&season=" + i + CHAVE_API);
-            DadosTemporada dadosTemporada = converteDados.obterDados(json, DadosTemporada.class);
-            dadosTemporadaList.add(dadosTemporada);
+        if (serieBuscada.isPresent()) {
+            Serie serie = serieBuscada.get();
+            List<DadosTemporada> dadosTemporadaList = new ArrayList<>();
+
+            for (int i = 1; i < serie.getTemporada(); i++) {
+                String json = consumoApi.obterDados(ENDERECO_URL + serie.getTitulo().replace(" ", "+") + "&season=" + i + CHAVE_API);
+                DadosTemporada dadosTemporada = converteDados.obterDados(json, DadosTemporada.class);
+                dadosTemporadaList.add(dadosTemporada);
+            }
+
+            List<Episodio> episodioList = dadosTemporadaList.stream()
+                    .flatMap(t -> t.episodios().stream()
+                            .map(e -> new Episodio(t.numero(), e)))
+                    .collect(Collectors.toList());
+
+            episodioList.forEach(System.out::println);
+            serie.setEpisodios(episodioList);
+            this.serieRepository.save(serie);
         }
-
-        List<Episodio> episodioList = dadosTemporadaList.stream()
-                .flatMap(t -> t.episodios().stream()
-                        .filter(e -> !e.avaliacao().equalsIgnoreCase("N/A")
-                                && e.titulo().toLowerCase().contains(nomeEpisodio.toLowerCase()))
-                        .map(e -> new Episodio(t.numero(), e)))
-                .collect(Collectors.toList());
-
-        episodioList.forEach(System.out::println);
     }
 
     public void listarSeriesBuscadas() {
-        List<Serie> serieList = this.serieRepository.findAll();
+        this.serieList = this.serieRepository.findAll();
         serieList.forEach(System.out::println);
     }
 }

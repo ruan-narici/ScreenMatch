@@ -47,6 +47,14 @@ public class Serie {
         this.id = id;
     }
 
+    public List<Episodio> getEpisodios() {
+        return episodios;
+    }
+
+    public void setEpisodios(List<Episodio> episodios) {
+        this.episodios = episodios;
+    }
+
     public String getTitulo() {
         return titulo;
     }
