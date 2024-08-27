@@ -31,13 +31,14 @@ public class Principal {
 
         while (opcao != 0) {
             System.out.println("""
-                #############################
-                1 - Buscar por série        #
-                2 - Buscar episódios        #
-                3 - Listar séries buscadas  # 
-                                            #
-                0 - Sair                    #
-                #############################
+                ##############################
+                1 - Buscar por série         #
+                2 - Buscar episódios         #
+                3 - Listar séries buscadas   # 
+                4 - Buscar série pelo titulo # 
+                                             #
+                0 - Sair                     #
+                ##############################
                 """);
             opcao = leitor.nextInt();
             leitor.nextLine();
@@ -53,6 +54,10 @@ public class Principal {
                 }
                 case 3: {
                     listarSeriesBuscadas();
+                    break;
+                }
+                case 4: {
+                    buscarSeriePorTitulo();
                     break;
                 }
                 case 0: {
@@ -107,5 +112,18 @@ public class Principal {
     public void listarSeriesBuscadas() {
         this.serieList = this.serieRepository.findAll();
         serieList.forEach(System.out::println);
+    }
+
+    public void buscarSeriePorTitulo() {
+        System.out.println("Digite o nome da série: ");
+        String nomeDaSerie = leitor.nextLine();
+
+        Optional<Serie> serieBuscada = serieRepository.findByTituloContainingIgnoreCase(nomeDaSerie);
+
+        if (serieBuscada.isPresent()) {
+            System.out.println("Dados da serie: " + serieBuscada.get());
+        } else {
+            System.out.println("Nenhuma série encontrada!");
+        }
     }
 }
