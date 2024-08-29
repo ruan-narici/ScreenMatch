@@ -31,15 +31,16 @@ public class Principal {
 
         while (opcao != 0) {
             System.out.println("""
-                ##############################
-                1 - Buscar por série         #
-                2 - Buscar episódios         #
-                3 - Listar séries buscadas   # 
-                4 - Buscar série pelo titulo # 
-                5 - Top 5 séries             # 
-                                             #
-                0 - Sair                     #
-                ##############################
+                ##########################################
+                1 - Buscar por série                     #
+                2 - Buscar episódios                     #
+                3 - Listar séries buscadas               # 
+                4 - Buscar série pelo titulo             # 
+                5 - Top 5 séries                         #
+                6 - Filtrar por temporada e avaliação    # 
+                                                         #
+                0 - Sair                                 #
+                ##########################################
                 """);
             opcao = leitor.nextInt();
             leitor.nextLine();
@@ -63,6 +64,10 @@ public class Principal {
                 }
                 case 5: {
                     listarTop5Series();
+                    break;
+                }
+                case 6: {
+                    filtrarPorTemporadaEAvaliacao();
                     break;
                 }
                 case 0: {
@@ -136,6 +141,20 @@ public class Principal {
         List<Serie> top5Series = serieRepository.findTop5ByOrderByAvaliacaoDesc();
         System.out.println("Top 5 séries: ");
         top5Series.forEach(s -> System.out.println(
+                s.getTitulo() + " avaliacao:" + s.getAvaliacao()
+        ));
+    }
+
+    public void filtrarPorTemporadaEAvaliacao() {
+        System.out.println("Digite o numero da temporada: ");
+        int numTemporada = leitor.nextInt();
+        leitor.nextLine();
+        System.out.println("Digite a avaliacao: ");
+        int avaliacao = leitor.nextInt();
+        leitor.nextLine();
+
+        List<Serie> seriesFiltradas = serieRepository.seriesPorTemporadaEAvaliacao(numTemporada, avaliacao);
+        seriesFiltradas.forEach(s -> System.out.println(
                 s.getTitulo() + " avaliacao:" + s.getAvaliacao()
         ));
     }
