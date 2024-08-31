@@ -17,4 +17,5 @@ public interface SerieRepository extends JpaRepository<Serie, Long> {
 
     @Query("SELECT s FROM Serie s WHERE s.temporada <= :numTemporada AND s.avaliacao >= :avaliacao")
     List<Serie> seriesPorTemporadaEAvaliacao(int numTemporada, int avaliacao);
+
 }
