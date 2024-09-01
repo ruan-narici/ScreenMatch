@@ -38,6 +38,7 @@ public class Principal {
                 4 - Buscar série pelo titulo             # 
                 5 - Top 5 séries                         #
                 6 - Filtrar por temporada e avaliação    # 
+                7 - Buscar episodio por trecho           # 
                                                          #
                 0 - Sair                                 #
                 ##########################################
@@ -68,6 +69,10 @@ public class Principal {
                 }
                 case 6: {
                     filtrarPorTemporadaEAvaliacao();
+                    break;
+                }
+                case 7: {
+                    buscaEpisodioPorTrecho();
                     break;
                 }
                 case 0: {
@@ -156,6 +161,16 @@ public class Principal {
         List<Serie> seriesFiltradas = serieRepository.seriesPorTemporadaEAvaliacao(numTemporada, avaliacao);
         seriesFiltradas.forEach(s -> System.out.println(
                 s.getTitulo() + " avaliacao:" + s.getAvaliacao()
+        ));
+    }
+
+    public void buscaEpisodioPorTrecho() {
+        System.out.println("Digite o trecho do título: ");
+        String trecho = leitor.nextLine();
+        List<Episodio> episodioList = serieRepository.episodiosPorTrecho(trecho);
+        episodioList.forEach(e -> System.out.printf(
+                "Serie: %s, Temporada: %s, Episodio: %s\n",
+                e.getSerie().getTitulo(), e.getNumeroTemporada(), e.getTitulo()
         ));
     }
 }
