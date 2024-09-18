@@ -16,7 +16,6 @@ public record SerieDTO(
         Categoria genero,
         String atores,
         String baner,
-        String sinopse,
-        List<Episodio> episodios
+        String sinopse
 ) {
 }
