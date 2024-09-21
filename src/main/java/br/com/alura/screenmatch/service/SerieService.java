@@ -2,6 +2,7 @@ package br.com.alura.screenmatch.service;
 
 import br.com.alura.screenmatch.dto.EpisodioDTO;
 import br.com.alura.screenmatch.dto.SerieDTO;
+import br.com.alura.screenmatch.model.Categoria;
 import br.com.alura.screenmatch.model.Episodio;
 import br.com.alura.screenmatch.model.Serie;
 import br.com.alura.screenmatch.repository.SerieRepository;
@@ -49,22 +50,6 @@ public class SerieService {
         return null;
     }
 
-    private List<SerieDTO> converteSerieDTO(List<Serie> series) {
-        return series.stream()
-                .map(s -> new SerieDTO(
-                        s.getId(),
-                        s.getTitulo(),
-                        s.getTemporada(),
-                        s.getAno(),
-                        s.getAvaliacao(),
-                        s.getGenero(),
-                        s.getAtores(),
-                        s.getBaner(),
-                        s.getSinopse()
-                ))
-                .collect(Collectors.toList());
-    }
-
     public List<EpisodioDTO> obterTodasTemporadas(Long id) {
         Optional<Serie> optionalSerie =  serieRepository.findById(id);
         if (optionalSerie.isPresent()) {
@@ -84,6 +69,27 @@ public class SerieService {
         List<Episodio> episodioList = serieRepository.buscarTemporadaPorNumero(id, numeroTemporada);
         return episodioList.stream()
                 .map(e -> new EpisodioDTO(e.getId(), e.getNumeroTemporada(), e.getTitulo()))
+                .collect(Collectors.toList());
+    }
+
+    public List<SerieDTO> obterSeriePorCategoria(String nomeCategoria) {
+        Categoria categoria = Categoria.fromString(nomeCategoria);
+        return this.converteSerieDTO(serieRepository.findByGenero(categoria));
+    }
+
+    private List<SerieDTO> converteSerieDTO(List<Serie> series) {
+        return series.stream()
+                .map(s -> new SerieDTO(
+                        s.getId(),
+                        s.getTitulo(),
+                        s.getTemporada(),
+                        s.getAno(),
+                        s.getAvaliacao(),
+                        s.getGenero(),
+                        s.getAtores(),
+                        s.getBaner(),
+                        s.getSinopse()
+                ))
                 .collect(Collectors.toList());
     }
 }
