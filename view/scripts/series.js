@@ -10,14 +10,20 @@ const fichaDescricao = document.getElementById('ficha-descricao');
 function carregarTemporadas() {
     getDados(`/series/${serieId}/temporadas/todas`)
         .then(data => {
-            const temporadasUnicas = [...new Set(data.map(temporada => temporada.temporada))];
+            console.log(data)
+            const temporadasUnicas = [...new Set(data.map(temporada => temporada.numeroTemporada))];
             listaTemporadas.innerHTML = ''; // Limpa as opções existentes
 
             const optionDefault = document.createElement('option');
             optionDefault.value = '';
             optionDefault.textContent = 'Selecione a temporada'
+            optionDefault.setAttribute('disabled', true);
+            optionDefault.setAttribute('hidden', true);
+            optionDefault.setAttribute('selected', true);
             listaTemporadas.appendChild(optionDefault); 
-           
+
+            console.log(temporadasUnicas)
+
             temporadasUnicas.forEach(temporada => {
                 const option = document.createElement('option');
                 option.value = temporada;
@@ -39,17 +45,17 @@ function carregarTemporadas() {
 function carregarEpisodios() {
     getDados(`/series/${serieId}/temporadas/${listaTemporadas.value}`)
         .then(data => {
-            const temporadasUnicas = [...new Set(data.map(temporada => temporada.temporada))];
+            const temporadasUnicas = [...new Set(data.map(temporada => temporada.numeroTemporada))];
             fichaSerie.innerHTML = ''; 
             temporadasUnicas.forEach(temporada => {
                 const ul = document.createElement('ul');
                 ul.className = 'episodios-lista';
 
-                const episodiosTemporadaAtual = data.filter(serie => serie.temporada === temporada);
+                const episodiosTemporadaAtual = data.filter(serie => serie.numeroTemporada === temporada);
 
-                const listaHTML = episodiosTemporadaAtual.map(serie => `
+                const listaHTML = episodiosTemporadaAtual.map((serie, index) => `
                     <li>
-                        ${serie.numeroEpisodio} - ${serie.titulo}
+                        ${index + 1} - ${serie.titulo}
                     </li>
                 `).join('');
                 ul.innerHTML = listaHTML;
