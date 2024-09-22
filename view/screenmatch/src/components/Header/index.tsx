@@ -1,6 +1,6 @@
 import Categories from './Categories';
 import styles from './Header.module.scss';
-import Logo from "./Logo";
+import Logo from './Logo';
 import Profile from './Profile';
 import Search from './Search';
 
