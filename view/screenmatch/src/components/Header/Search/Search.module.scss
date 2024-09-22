@@ -1,0 +1,23 @@
+@import '@/styles/variables.scss';
+
+.container {
+  position: relative;
+
+  &__input {
+    background-color: transparent;
+    border: 1px solid $white-500;
+    border-radius: 5px;
+    padding: .5rem 1rem;
+    color: $grey-200;
+    outline: none;
+    width: 250px;
+  }
+
+  &__icon {
+    position: absolute;
+    right: 16px;
+    top: 8px;
+    user-select: none;
+    cursor: pointer;
+  }
+}

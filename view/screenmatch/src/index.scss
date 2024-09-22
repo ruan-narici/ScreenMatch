@@ -1,0 +1,16 @@
+@import 'styles/fonts';
+@import 'styles/variables';
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: $grey-900;
+  color: $white-500;
+  min-height: 100vh;
+  font-family: Poppins;
+  font-weight: 400;
+}

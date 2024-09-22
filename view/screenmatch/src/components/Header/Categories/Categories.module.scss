@@ -1,0 +1,43 @@
+@import '@/styles/variables';
+
+.container {
+  position: relative;
+
+  &__title {
+    transition: .3s all;
+
+    &:hover {
+      cursor: pointer;
+      color: $green-300;
+    }
+  }
+  
+  &__list {
+    position: absolute;
+    top: 0;
+    left: -1.5rem;
+    background-color: $grey-900-90op;
+    width: 250px;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 3rem 1.5rem 2rem 1.5rem;
+
+    .item {
+      font-weight: bold;
+      transition: .3s all;
+
+      &:hover {
+        cursor: pointer;
+        color: $green-300;
+      }
+    }
+  }
+
+  .dnone {
+    display: none;
+  }
+}
+
+
