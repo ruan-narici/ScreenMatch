@@ -1,0 +1,23 @@
+@import '@/styles/variables.scss';
+
+.container {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  user-select: none;
+  margin: 1.5rem 0;
+
+  cursor: pointer;
+
+  &__img {
+    width: 20px;
+    height: 20px;
+  }
+
+  &__text {
+    transition: 0.3s all;
+    &:hover {
+      color: $green-300;
+    }
+  }
+}

@@ -13,4 +13,18 @@ body {
   min-height: 100vh;
   font-family: Poppins;
   font-weight: 400;
+  overflow-x: hidden;
+}
+
+body::-webkit-scrollbar {
+  background-color: transparent;
+  width: 5px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: $green-300;
+}
+
+main {
+  margin: 1.5rem 2.5rem;
 }

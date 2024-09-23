@@ -1,0 +1,13 @@
+@import '@/styles/variables.scss';
+
+.container {
+
+  &__select {
+    width: 300px;
+    padding: .5rem 1rem;
+    color: $grey-900;
+    outline: none;
+    font-size: 1rem;
+    border-radius: 5px;
+  }
+}
