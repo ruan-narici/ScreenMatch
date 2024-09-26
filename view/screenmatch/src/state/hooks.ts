@@ -1,6 +1,7 @@
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { allSeriesList, episodesAtSeason, isHome, justOneSerie, newsSeriesList, popularSeriesList, seasonSelected } from './atom';
 import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 
 const defaultUrl = 'http://localhost:8080/series';
@@ -116,9 +117,10 @@ export function useGetEpisodesAtSeason(): (id: string | undefined | number) => v
 
 export function useChangeHeader(): () => void {
   return () => {
+    const location = useLocation();
     const setIsHomeValue = useSetRecoilState(isHome);
 
-    if (window.location.href.includes('serie')) {
+    if (location.pathname.includes('serie')) {
       setIsHomeValue(false);
       return;
     }
